@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.3.3](https://github.com/svalbard-watch/swi-metobs-backend/compare/3.3.2...3.3.3) (2026-11-05)
+
+
+### Bug Fixes
+
+* bump docker/login-action from 4.6.0 to 4.7.0 ([d06a920](https://github.com/svalbard-watch/swi-metobs-backend/commit/d06a920484b5b5e61ae201a8cbd4933c0ff7c621))
+* bump docker/login-action from 4.6.0 to 4.7.0 ([d96e772](https://github.com/svalbard-watch/swi-metobs-backend/commit/d96e7721afedcf0e0b21dedbc9308ec50b75c49f))
+* bump the minor-and-patch group across 1 directory with 4 updates ([1fadd68](https://github.com/svalbard-watch/swi-metobs-backend/commit/1fadd68886c703f103e6fcf2ee78027025fc6191))
+* bump the minor-and-patch group across 1 directory with 4 updates ([e9bcf0e](https://github.com/svalbard-watch/swi-metobs-backend/commit/e9bcf0e5862222ae81297e92afb5b07d061fa031))
+
 ## [3.3.2](https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend/compare/3.3.1...3.3.2) (2026-10-26)
 
 
