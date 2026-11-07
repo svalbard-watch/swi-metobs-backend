@@ -5,6 +5,7 @@ from app.api.v3.endpoints import observation_latest
 from app.api.v3.endpoints import stations_informations
 from app.api.v3.endpoints import spheres
 from app.api.v3.endpoints import forecast_point
+from app.api.v3.endpoints import legal
 
 api_router = APIRouter()
 api_router.include_router(
@@ -32,3 +33,5 @@ api_router.include_router(
 api_router.include_router(
     spheres.router, prefix="/spheres", tags=["Birds eyes spheres"]
 )
+
+api_router.include_router(legal.router, prefix="/legal", tags=["Legal documents"])
