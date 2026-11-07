@@ -38,6 +38,8 @@ KEEP_TTL = 30 * 24 * 3600
 LOCK_TTL = 120
 MIN_BACKOFF = 300
 LOOP_TICK = 300
+# How long a request on a cold cache waits for the shared first fetch.
+COLD_WAIT = 10.0
 TIMEOUT = 10.0
 USER_AGENT = "swi-metobs-backend"
 
@@ -244,14 +246,14 @@ async def refresh_loop(refreshers: list[Refresher]) -> None:
 
 
 async def get_or_populate(
-    name: str, refreshers: list[Refresher], wait: float = 10.0
+    name: str, refreshers: list[Refresher], wait: Optional[float] = None
 ) -> Optional[dict]:
     """The cached copy `name`. On a cold cache, run one shared cycle and wait for it."""
     entry = get_entry(name)
     if entry is not None:
         return entry
     await run_cycle(refreshers, force=True)
-    deadline = time.time() + wait
+    deadline = time.time() + (COLD_WAIT if wait is None else wait)
     while time.time() < deadline:
         entry = get_entry(name)
         if entry is not None:

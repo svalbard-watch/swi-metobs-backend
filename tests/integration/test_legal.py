@@ -57,10 +57,6 @@ def raw(tag, name):
     return f"https://raw.githubusercontent.com/{REPO}/{tag}/{name}"
 
 
-async def no_sleep(_seconds):
-    return None
-
-
 @pytest.fixture(autouse=True)
 def github(monkeypatch):
     cache = MemoryCache()
@@ -150,7 +146,7 @@ def test_last_good_copy_is_served_while_github_is_down(client, monkeypatch):
 
 def test_503_without_a_copy_when_github_is_down(client, monkeypatch):
     monkeypatch.setenv("SWI_LEGAL_REPO", REPO)
-    monkeypatch.setattr(gp.asyncio, "sleep", no_sleep)
+    monkeypatch.setattr(gp, "COLD_WAIT", 0)
     FakeGitHub.routes = {}
     response = client.get("/v3/legal/terms-of-service")
     assert response.status_code == 503
@@ -162,7 +158,7 @@ def test_a_document_without_a_release_is_unavailable_not_a_placeholder(
     client, monkeypatch
 ):
     monkeypatch.setenv("SWI_LEGAL_REPO", REPO)
-    monkeypatch.setattr(gp.asyncio, "sleep", no_sleep)
+    monkeypatch.setattr(gp, "COLD_WAIT", 0)
     FakeGitHub.routes[RELEASES] = releases("privacy-policy-v1.0.0")
     assert client.get("/v3/legal/privacy-policy").status_code == 200
     assert client.get("/v3/legal/terms-of-service").status_code == 503

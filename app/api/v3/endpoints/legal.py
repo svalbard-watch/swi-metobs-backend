@@ -159,9 +159,7 @@ async def get_legal_document(
     if legal_repo() is None:
         record = placeholder(document, lang)
     else:
-        entry = await gp.get_or_populate(
-            entry_name(document, lang), [refresh_legal], wait=10
-        )
+        entry = await gp.get_or_populate(entry_name(document, lang), [refresh_legal])
         if entry is None:
             raise HTTPException(
                 status_code=503, detail="The legal document is not available yet"
