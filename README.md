@@ -1,8 +1,8 @@
 # SWI MetObs Backend
 
-[![Code Coverage](https://img.shields.io/codecov/c/github/UNIS-Svalbard-Weather-Information/swi-metobs-backend)](https://codecov.io/gh/UNIS-Svalbard-Weather-Information/swi-metobs-backend)
-[![Test and Lint](https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend/actions/workflows/test-and-lint.yml)
-[![Docker Build and Push](https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend/actions/workflows/docker-build-push.yml)
+[![Code Coverage](https://img.shields.io/codecov/c/github/svalbard-watch/swi-metobs-backend)](https://codecov.io/gh/svalbard-watch/swi-metobs-backend)
+[![Test and Lint](https://github.com/svalbard-watch/swi-metobs-backend/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/svalbard-watch/swi-metobs-backend/actions/workflows/test-and-lint.yml)
+[![Docker Build and Push](https://github.com/svalbard-watch/swi-metobs-backend/actions/workflows/docker-build-push.yml/badge.svg)](https://github.com/svalbard-watch/swi-metobs-backend/actions/workflows/docker-build-push.yml)
 
 A backend service for meteorological observations, serving as the public data API for the SWIApp (Svalbard Weather Information). This service provides precached realtime and historical weather observation and forecast data, as well as multiple other public data.
 
@@ -18,7 +18,7 @@ A backend service for meteorological observations, serving as the public data AP
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend.git
+   git clone https://github.com/svalbard-watch/swi-metobs-backend.git
    cd swi-metobs-backend
    ```
 
@@ -56,7 +56,7 @@ The spheres functionality can be configured using environment variables:
 The privacy policy, the terms of service and the About-panel data (contributors, references, release) are fetched from GitHub by the server, so that visitors never contact GitHub and their IP address stays with the operator.
 
 - `SWI_LEGAL_REPO`: `owner/repo` that publishes the documents as releases tagged `privacy-policy-vX.Y.Z` and `terms-of-service-vX.Y.Z` (files `privacy_policy_EN.md`, `terms_of_service_EN.md`). The text is read at the newest release tag, never from a branch. **Unset by default**: a neutral placeholder shipped in `app/legal/` is served, so an instance never publishes another organisation's documents by accident. A configured document without a release answers 503, it is not replaced by the placeholder.
-- `SWI_PROJECT_INFO_CONTRIBUTORS_URL`, `SWI_PROJECT_INFO_REFERENCES_URL`, `SWI_PROJECT_INFO_RELEASE_URL`: where to read the JSON files (default: the files of the UNIS-Svalbard-Weather-Information organisation). They must be files on `raw.githubusercontent.com`.
+- `SWI_PROJECT_INFO_CONTRIBUTORS_URL`, `SWI_PROJECT_INFO_REFERENCES_URL`, `SWI_PROJECT_INFO_RELEASE_URL`: where to read the JSON files (default: the files of the svalbard-watch organisation). They must be files on `raw.githubusercontent.com`.
 - `SWI_GITHUB_TOKEN`: optional, raises the GitHub API limit.
 - `SWI_GITHUB_REFRESH_HOURS` (default `6`): hours between two refreshes.
 - `SWI_GITHUB_MAX_CALLS_PER_HOUR` (default `20`) and `SWI_GITHUB_MAX_RAW_CALLS_PER_HOUR` (default `120`): hard caps on calls to `api.github.com` and `raw.githubusercontent.com`, well under GitHub's limits.

@@ -17,7 +17,7 @@ from app.utils import github_proxy as gp
 
 router = APIRouter()
 
-RAW = f"https://{gp.RAW_HOST}/UNIS-Svalbard-Weather-Information"
+RAW = f"https://{gp.RAW_HOST}/svalbard-watch"
 DEFAULT_URLS = {
     "contributors": f"{RAW}/.github/refs/heads/main/contributors.json",
     "references": f"{RAW}/swi-production-deployment/refs/heads/main/info/references.json",
