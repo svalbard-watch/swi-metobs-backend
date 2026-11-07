@@ -25,8 +25,10 @@ ARG APP_UID=9001
 ARG APP_GID=9001
 WORKDIR /swi
 
-# Install curl and clean up
+# Install curl and clean up. The upgrade picks up Debian security fixes (zlib1g) that are
+# newer than the base image.
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
