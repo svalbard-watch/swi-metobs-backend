@@ -239,10 +239,14 @@ async def run_cycle(refreshers: list[Refresher], *, force: bool = False) -> bool
 async def refresh_loop(refreshers: list[Refresher]) -> None:
     """Refresh at start-up (so a redeploy never serves what the old version cached), then
     whenever the last cycle is older than the refresh interval."""
-    await run_cycle(refreshers, force=True)
+    force = True
     while True:
+        try:
+            await run_cycle(refreshers, force=force)
+        except Exception:
+            logger.exception("GitHub refresh loop error")
+        force = False
         await asyncio.sleep(LOOP_TICK)
-        await run_cycle(refreshers)
 
 
 async def get_or_populate(

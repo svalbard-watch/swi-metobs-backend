@@ -2,6 +2,8 @@
 
 from datetime import datetime
 
+import asyncio
+
 import httpx
 import pytest
 
@@ -259,3 +261,45 @@ class TestCycle:
             raise AssertionError("must not refresh")
 
         assert (await gp.get_or_populate("x", [refresh]))["value"] == "v"
+
+
+class TestRefreshLoop:
+    async def test_refreshes_at_start_up_even_when_a_recent_cycle_exists(
+        self, shared_cache, monkeypatch
+    ):
+        # A previous deployment refreshed a minute ago: the new one must still refresh.
+        shared_cache.setex(gp.LAST_CYCLE_KEY, 3600, '{"at": 1}')
+        calls = []
+
+        async def refresh():
+            calls.append(1)
+
+        async def stop(_seconds):
+            raise asyncio.CancelledError
+
+        monkeypatch.setattr(gp.asyncio, "sleep", stop)
+        with pytest.raises(asyncio.CancelledError):
+            await gp.refresh_loop([refresh])
+        assert calls == [1]
+
+    async def test_loop_survives_a_crashing_refresher_and_waits_for_the_interval(
+        self, shared_cache, monkeypatch
+    ):
+        calls = []
+        ticks = []
+
+        async def crash():
+            calls.append(1)
+            raise RuntimeError("bug")
+
+        async def tick(_seconds):
+            ticks.append(1)
+            shared_cache.delete("github:lock:cycle")
+            if len(ticks) == 3:
+                raise asyncio.CancelledError
+
+        monkeypatch.setattr(gp.asyncio, "sleep", tick)
+        with pytest.raises(asyncio.CancelledError):
+            await gp.refresh_loop([crash])
+        # Start-up cycle ran; later ticks stay quiet until the retry marker expires.
+        assert calls == [1]

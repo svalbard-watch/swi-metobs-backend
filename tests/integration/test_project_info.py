@@ -131,3 +131,41 @@ def test_etag_gives_a_304(client):
 
 def test_unknown_name_is_rejected(client):
     assert client.get("/v3/project/anything").status_code == 422
+
+
+class TestStartup:
+    def test_lifespan_starts_the_github_refresh(self, monkeypatch):
+        from app import main
+
+        started = []
+
+        async def fake_loop(refreshers):
+            started.append(len(refreshers))
+
+        async def fake_warm_up():
+            return None
+
+        monkeypatch.setenv("SWI_METSERVICES_CACHE_DISABLED", "false")
+        monkeypatch.setattr(main, "refresh_loop", fake_loop)
+        monkeypatch.setattr(main, "warm_up_spheres", fake_warm_up)
+        with TestClient(main.app):
+            pass
+        assert started == [2]
+
+    def test_nothing_is_fetched_when_the_cache_is_disabled(self, monkeypatch):
+        from app import main
+
+        started = []
+
+        async def fake_loop(refreshers):
+            started.append(1)
+
+        async def fake_warm_up():
+            return None
+
+        monkeypatch.setenv("SWI_METSERVICES_CACHE_DISABLED", "true")
+        monkeypatch.setattr(main, "refresh_loop", fake_loop)
+        monkeypatch.setattr(main, "warm_up_spheres", fake_warm_up)
+        with TestClient(main.app):
+            pass
+        assert started == []
