@@ -305,3 +305,24 @@ def cache_response(ttl: int = 60):
         return wrapper
 
     return decorator
+
+
+def shared_cache_get(key: str):
+    """Read a JSON value from the shared cache; any failure is a miss."""
+    try:
+        backend = get_cache_backend()
+        raw = backend.get(key) if backend is not None else None
+        return json.loads(raw) if raw else None
+    except Exception as e:
+        logger.warning(f"Shared cache read failed for {key}: {e}")
+        return None
+
+
+def shared_cache_set(key: str, value, ttl: int) -> None:
+    """Write a JSON value to the shared cache; failures are only logged."""
+    try:
+        backend = get_cache_backend()
+        if backend is not None:
+            backend.setex(key, ttl, json.dumps(value))
+    except Exception as e:
+        logger.warning(f"Shared cache write failed for {key}: {e}")

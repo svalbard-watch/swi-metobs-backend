@@ -12,6 +12,7 @@ from app.api.v3.endpoints.spheres import (
     parse_svalbox_feature,
 )
 from app.models.spheres import SphereGeojson, SphereNodePanorama
+from app.utils import cache as cache_module
 from app.utils.cache import MemoryCache
 
 
@@ -189,7 +190,7 @@ class TestZenodoMetadata:
     @pytest.fixture(autouse=True)
     def shared_cache(self, monkeypatch):
         cache = MemoryCache()
-        monkeypatch.setattr(spheres, "get_cache_backend", lambda: cache)
+        monkeypatch.setattr(cache_module, "get_cache_backend", lambda: cache)
         return cache
 
     async def test_maps_record_and_caches(self):
@@ -238,7 +239,7 @@ class TestZenodoMetadata:
             def setex(self, key, ttl, value):
                 raise RuntimeError("redis down")
 
-        monkeypatch.setattr(spheres, "get_cache_backend", lambda: Broken())
+        monkeypatch.setattr(cache_module, "get_cache_backend", lambda: Broken())
         client = FakeClient({"1": FakeResponse({"metadata": {"title": "T"}})})
 
         assert (await spheres.fetch_zenodo_metadata(client, "1"))["label"] == "T"
