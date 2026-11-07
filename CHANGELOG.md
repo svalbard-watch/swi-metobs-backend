@@ -1,5 +1,25 @@
 # Changelog
 
+## [3.4.0](https://github.com/svalbard-watch/swi-metobs-backend/compare/3.3.2...3.4.0) (2026-11-07)
+
+
+### Features
+
+* **github:** add a rate-limit-safe GitHub fetcher ([6cb14be](https://github.com/svalbard-watch/swi-metobs-backend/commit/6cb14be0b59162ee80a891f28f433e70125abdfe))
+* **github:** refresh legal and project data at start-up and on a schedule ([6b35e7b](https://github.com/svalbard-watch/swi-metobs-backend/commit/6b35e7b703443d00eb1cfd9789f4bc3c809c9733))
+* **legal:** serve released privacy policy and terms of service ([18ced20](https://github.com/svalbard-watch/swi-metobs-backend/commit/18ced201055fd1ef47d589e8d8e618c41ff91d77))
+* **legal:** ship neutral placeholder legal documents ([e211bcc](https://github.com/svalbard-watch/swi-metobs-backend/commit/e211bccfe3c234e13b2cbd4ca47e7fa4e670826a))
+* **project:** serve contributors, references and release from the backend ([2ab7f77](https://github.com/svalbard-watch/swi-metobs-backend/commit/2ab7f77b5c3750ccd5b5d9f87ebdc06f5d2e54a3))
+
+
+### Bug Fixes
+
+* bump docker/login-action from 4.6.0 to 4.7.0 ([d06a920](https://github.com/svalbard-watch/swi-metobs-backend/commit/d06a920484b5b5e61ae201a8cbd4933c0ff7c621))
+* bump docker/login-action from 4.6.0 to 4.7.0 ([d96e772](https://github.com/svalbard-watch/swi-metobs-backend/commit/d96e7721afedcf0e0b21dedbc9308ec50b75c49f))
+* bump the minor-and-patch group across 1 directory with 4 updates ([1fadd68](https://github.com/svalbard-watch/swi-metobs-backend/commit/1fadd68886c703f103e6fcf2ee78027025fc6191))
+* bump the minor-and-patch group across 1 directory with 4 updates ([e9bcf0e](https://github.com/svalbard-watch/swi-metobs-backend/commit/e9bcf0e5862222ae81297e92afb5b07d061fa031))
+* **project:** use the svalbard-watch org in the default GitHub sources ([4c16a1f](https://github.com/svalbard-watch/swi-metobs-backend/commit/4c16a1fd6fdb276fa0d963a760c274217cf3e0fa))
+
 ## [3.3.2](https://github.com/UNIS-Svalbard-Weather-Information/swi-metobs-backend/compare/3.3.1...3.3.2) (2026-10-26)
 
 
