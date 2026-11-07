@@ -1,7 +1,6 @@
 from fastapi import HTTPException, APIRouter
 from app.models.spheres import SphereGeojson, SphereNodePanorama, SphereNode
-from app.utils.cache import cache_response, get_cache_backend
-import json
+from app.utils.cache import cache_response, shared_cache_get, shared_cache_set
 import os
 import httpx
 from typing import Dict, List, Optional, Set, Tuple
@@ -342,27 +341,6 @@ def parse_geojson_feature_to_sphere_node(
         label=properties.get("label"),
         base_url=base_url,  # Pass base URL for relative URL resolution
     )
-
-
-def shared_cache_get(key: str):
-    """Read a JSON value from the shared cache; any failure is a miss."""
-    try:
-        backend = get_cache_backend()
-        raw = backend.get(key) if backend is not None else None
-        return json.loads(raw) if raw else None
-    except Exception as e:
-        logger.warning(f"Shared cache read failed for {key}: {e}")
-        return None
-
-
-def shared_cache_set(key: str, value, ttl: int) -> None:
-    """Write a JSON value to the shared cache; failures are only logged."""
-    try:
-        backend = get_cache_backend()
-        if backend is not None:
-            backend.setex(key, ttl, json.dumps(value))
-    except Exception as e:
-        logger.warning(f"Shared cache write failed for {key}: {e}")
 
 
 async def fetch_zenodo_metadata(client: httpx.AsyncClient, doi: str) -> Dict:

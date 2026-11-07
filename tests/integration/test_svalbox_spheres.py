@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 from app.api.v3.endpoints import spheres
 from app.main import app
 from app.models.spheres import SphereGeojson, SphereNodePanorama
+from app.utils import cache as cache_module
 from app.utils.cache import MemoryCache
 
 client = TestClient(app)
@@ -81,7 +82,7 @@ def zenodo_calls(monkeypatch):
 def shared_cache(monkeypatch):
     """A fresh in-memory stand-in for Redis (the test suite disables caching)."""
     cache = MemoryCache()
-    monkeypatch.setattr(spheres, "get_cache_backend", lambda: cache)
+    monkeypatch.setattr(cache_module, "get_cache_backend", lambda: cache)
     return cache
 
 
