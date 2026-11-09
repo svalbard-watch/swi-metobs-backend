@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.1](https://github.com/svalbard-watch/swi-metobs-backend/compare/3.4.0...3.4.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* bump pandas from 3.1.0 to 3.1.1 in the minor-and-patch group across 1 directory ([8ac59cc](https://github.com/svalbard-watch/swi-metobs-backend/commit/8ac59cc525d42a7650bd25e81dc00bf4acac4ab8))
+
 ## [3.4.0](https://github.com/svalbard-watch/swi-metobs-backend/compare/3.3.2...3.4.0) (2026-11-07)
 
 
